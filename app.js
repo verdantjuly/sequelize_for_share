@@ -24,8 +24,10 @@ app.get("/posts", async (req, res) => {
 });
 app.get("/posts/:id", async (req, res) => {
   const { id } = req.params;
-  const post = await models.Post.findOne({ where: { id } });
-  res.json({ data: post });
+  const post = await models.Post.findOne({
+    where: { id },
+    include: [{ model: models.Comment }],
+  });
   if (post) {
     res.status(200).json({ data: post });
   } else {
@@ -64,6 +66,7 @@ app.delete("/posts/:id", async (req, res) => {
     res.status(404).json({ data: `post not found` });
   }
 });
+
 app.listen(PORT, () => {
   console.log(`server listening on ${PORT}`);
   models.sequelize
