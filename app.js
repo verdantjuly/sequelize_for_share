@@ -3,7 +3,6 @@ const app = express();
 const PORT = 3000;
 const path = require("path");
 const models = require("./models");
-const { Where } = require("sequelize/lib/utils");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.post("/posts", async (req, res) => {
