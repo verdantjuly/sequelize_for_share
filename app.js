@@ -81,6 +81,7 @@ app.put("/posts/:postId/comments/:commentId", async (req, res) => {
 app.delete("/posts/:postId/comments/:commentId", async (req, res) => {
   const { commentId } = req.params;
   const result = await models.Comment.destroy({ where: { id: commentId } });
+  // result 에는 삭제된 개수가 담김
   if (result) {
     res.status(204).json({ result: "comment deleted" });
   } else {
