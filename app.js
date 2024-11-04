@@ -82,7 +82,7 @@ app.delete("/posts/:postId/comments/:commentId", async (req, res) => {
   const { commentId } = req.params;
   const result = await models.Comment.destroy({ where: { id: commentId } });
   if (result) {
-    res.status(204).json({ data: "comment deleted" });
+    res.status(204).json({ result: "comment deleted" });
   } else {
     res.status(404).json({ result: `comment not found` });
   }
