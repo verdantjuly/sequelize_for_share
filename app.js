@@ -78,6 +78,16 @@ app.put("/posts/:postId/comments/:commentId", async (req, res) => {
   }
 });
 
+app.delete("/posts/:postId/comments/:commentId", async (req, res) => {
+  const { commentId } = req.params;
+  const result = await models.Comment.destroy({ where: { id: commentId } });
+  if (result) {
+    res.status(204).json({ data: "comment deleted" });
+  } else {
+    res.status(404).json({ result: `comment not found` });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`server listening on ${PORT}`);
   models.sequelize
