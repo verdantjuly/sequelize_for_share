@@ -57,12 +57,24 @@ app.post("/posts/:id/comments", async (req, res) => {
 app.delete("/posts/:id", async (req, res) => {
   const { id } = req.params;
   const post = await models.Post.findOne({ where: { id } });
-  res.json({ data: post });
   if (post) {
     post.destroy({ where: { id } });
     res.status(200).json({ data: post });
   } else {
     res.status(404).json({ data: `post not found` });
+  }
+});
+
+app.put("/posts/:postId/comments/:commentId", async (req, res) => {
+  const { postId, commentId } = req.params;
+  const { content } = req.body;
+  const comment = await models.Comment.findByPk(commentId);
+  if (comment) {
+    comment.content = content;
+    await comment.save();
+    res.status(200).json({ data: comment });
+  } else {
+    res.status(404).json({ result: `comment not found` });
   }
 });
 
